@@ -28,11 +28,11 @@ public class DemoSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
         return http.csrf(csrf-> csrf.disable())
-                //.authorizeHttpRequests(auth -> auth.requestMatchers("/api/products/add")
-                    //    .hasRole("ADMIN")
-               // .requestMatchers("/api/products/view")
-               //         .hasAnyRole("CUSTOMER","ADMIN"))
-               // .httpBasic(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/products/add")
+                        .hasRole("ADMIN")
+                .requestMatchers("/api/products/view")
+                        .hasAnyRole("CUSTOMER","ADMIN"))
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 
