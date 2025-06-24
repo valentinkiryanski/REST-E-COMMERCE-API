@@ -24,14 +24,14 @@ public class DemoSecurityConfig {
         return userManager;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-
-        return http.csrf(csrf-> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/products/add")
-                        .hasRole("ADMIN")
-                .requestMatchers("/api/products/view")
-                        .hasAnyRole("CUSTOMER","ADMIN"))
+     @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/api/products/add").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/products/view").hasAnyRole("CUSTOMER", "ADMIN")
+                        .anyRequest().authenticated()
+                )
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
