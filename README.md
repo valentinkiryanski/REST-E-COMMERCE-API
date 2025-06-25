@@ -99,10 +99,16 @@ CREATE TABLE user_order(
 5. **Test Endpoints**
 
    Use Postman or cURL to interact with:
-
-   - `http://localhost:8080/api/products`
-   - `http://localhost:8080/cart`
-   - `http://localhost:8080/order`
+   
+   - `/api/products/add` - POST
+   - `/api/products/view` - GET
+   - `/api/products/modify/**` - PATCH
+   - `/api/products/modify/id/**` - PATCH
+   - `/order/view` - GET
+   - `/order/make` - GET
+   - `/cart/view` - GET
+   - `/cart/add` - POST
+   - `/cart/delete/**` - DELETE
 
 ---
 
