@@ -30,6 +30,13 @@ public class DemoSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/products/add").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/products/view").hasAnyRole("CUSTOMER", "ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/api/products/modify/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/api/products/modify/id/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/order/view").hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers(HttpMethod.GET,"/order/make").hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers(HttpMethod.GET,"/cart/view").hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers(HttpMethod.POST,"/cart/add").hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers(HttpMethod.DELETE,"/cart/delete/**").hasRole("CUSTOMER")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
