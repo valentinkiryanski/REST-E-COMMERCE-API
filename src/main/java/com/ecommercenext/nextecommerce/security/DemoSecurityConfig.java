@@ -14,14 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class DemoSecurityConfig {
 
     @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
+    public UserDetailsManager userDetailsManager(DataSource dataSource){
 
-        UserDetails alex = User.builder().username("alex").password("{noop}123").roles("CUSTOMER").build();
-
-        UserDetails admin = User.builder().username("admin").password("{noop}admin123").roles("ADMIN").build();
-
-        InMemoryUserDetailsManager userManager = new InMemoryUserDetailsManager(alex,admin);
-        return userManager;
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id,pw,active from members where user_id=?");
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id,role from roles where user_id =?");
+        return jdbcUserDetailsManager;
     }
 
     @Bean
