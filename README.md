@@ -53,6 +53,30 @@ CREATE TABLE user_order(
   total_price DECIMAL,
   FOREIGN KEY(product_id) REFERENCES products(id)
 );
+
+CREATE TABLE `members` (
+  `user_id` varchar(50) NOT NULL,
+  `pw` char(68) NOT NULL,
+  `active` tinyint NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `members`
+VALUES
+('alex','{bcrypt}$2y$10$4z.IxKaO0XipLT5vEjwjl.ICVSW8.sowFn88eDG524vMR22p.0.u.',1),
+('admin','{bcrypt}$2y$10$xXoCaekqi7gsXvmc6jprgeBppqJH4iraa34pFtKCYKeF4dPlE5w.i',1);
+
+CREATE TABLE `roles` (
+  `user_id` varchar(50) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  UNIQUE KEY `authorities5_idx_1` (`user_id`,`role`),
+  CONSTRAINT `authorities5_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `members` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `roles`
+VALUES
+('alex','ROLE_CUSTOMER'),
+('admin','ROLE_ADMIN');
 ```
 
 ---
@@ -99,10 +123,16 @@ CREATE TABLE user_order(
 5. **Test Endpoints**
 
    Use Postman or cURL to interact with:
-
-   - `http://localhost:8080/api/products`
-   - `http://localhost:8080/cart`
-   - `http://localhost:8080/order`
+   
+   - `/api/products/add` - POST
+   - `/api/products/view` - GET
+   - `/api/products/modify/**` - PATCH
+   - `/api/products/modify/id/**` - PATCH
+   - `/order/view` - GET
+   - `/order/make` - GET
+   - `/cart/view` - GET
+   - `/cart/add` - POST
+   - `/cart/delete/**` - DELETE
 
 ---
 

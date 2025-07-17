@@ -3,6 +3,10 @@ package com.ecommercenext.nextecommerce.controllers;
 import com.ecommercenext.nextecommerce.entity.Products;
 import com.ecommercenext.nextecommerce.services.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +17,7 @@ import java.util.Map;
 public class ProductController {
 
     private ProductsService productsService;
+
 
     @Autowired
     public ProductController(ProductsService productsService){
@@ -39,6 +44,8 @@ public class ProductController {
     public Products modifyProduct(@PathVariable int id, @RequestBody Map<String,Object> updates){
         return productsService.modifyProduct(id,updates);
     }
+
+
 
 
 }
